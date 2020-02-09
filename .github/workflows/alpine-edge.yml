@@ -27,7 +27,7 @@ jobs:
           su vivarium-devel
           mkdir /home/vivarium-devel/.abuild
           echo VIVARIUM_PRIV_KEY > /home/vivarium-devel/.abuild/vivarium-devel@alpine.vivarium.cloud-5e22f57b.rsa
-          echo 'PACKAGER_PRIVKEY="/home/vivarium-devel/.abuild/vivarium-devel@alpine.vivarium.cloud-5e22f57b.rsa"' > /home/vivarium-devel/abuild/.abuild
+          echo 'PACKAGER_PRIVKEY="/home/vivarium-devel/.abuild/vivarium-devel@alpine.vivarium.cloud-5e22f57b.rsa"' > /home/vivarium-devel/.abuild/abuild.conf
       - name: Build Testing
         run: |
           cd testing
