@@ -31,4 +31,4 @@ jobs:
       - name: Build Testing
         run: |
           cd testing
-          cd unittest++ && abuild checksum && abuild -rF && cd..
+          cd unittest++ && abuild -F checksum && abuild -rF && cd..
