@@ -1,0 +1,61 @@
+# Contributor: Luca Cantoreggi <luca@cantoreggi.xyz>
+# Maintainer: Luca Cantoreggi <luca@cantoreggi.xyz>
+_realpkgname="unittest-cpp"
+pkgname="libunittest++"
+pkgver="2.0.0"
+pkgrel=0
+pkgdesc="A lightweight unit testing framework for C++"
+url="https://github.com/unittest-cpp/unittest-cpp"
+
+arch="all"
+license="MIT"
+
+makedepends="autoconf automake libtool"
+
+subpackages="$pkgname-static $pkgname-dev"
+
+source="https://github.com/unittest-cpp/unittest-cpp/releases/download/v$pkgver/$_realpkgname-$pkgver.tar.gz"
+
+builddir="$srcdir/$_realpkgname-$pkgver"
+
+prepare() {
+
+	default_prepare
+
+	cd "$builddir"
+
+	sed -i "s/m4_esyscmd_s(\[git describe --tags | cut -c2-])/[$pkgver]/" configure.ac
+
+	autoreconf -i
+	autoconf
+}
+
+build() {
+	
+	cd "$builddir"
+
+	./configure \
+		--build=$CBUILD \
+		--host=$CHOST \
+		--prefix=/usr \
+		--exec-prefix=/usr \
+
+	make
+}
+
+check() {
+	
+	cd "$builddir"
+
+	make check
+}
+
+package() {
+	
+	cd "$builddir"
+	
+	make DESTDIR="$pkgdir" install
+}
+
+sha512sums="51b37055dbe2a8772a59047f900202332b75be8801af94496848503c6b652d34f5e2a62c92555d492e2265d35fc6befb5bd4209364f7a4e7c9f2f5988537fae6  unittest-cpp-2.0.0.tar.gz"
+
