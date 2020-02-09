@@ -25,7 +25,7 @@ jobs:
           adduser --disabled-password vivarium-devel
           addgroup vivarium-devel abuild
           su vivarium-devel
-          mkdir /home/vivarium-devel/abuild
+          mkdir /home/vivarium-devel/.abuild
           echo VIVARIUM_PRIV_KEY > /home/vivarium-devel/.abuild/vivarium-devel@alpine.vivarium.cloud-5e22f57b.rsa
           echo 'PACKAGER_PRIVKEY="/home/vivarium-devel/.abuild/vivarium-devel@alpine.vivarium.cloud-5e22f57b.rsa"' > /home/vivarium-devel/abuild/.abuild
       - name: Build Testing
