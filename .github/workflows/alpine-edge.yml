@@ -20,15 +20,15 @@ jobs:
           mv vivarium-devel@alpine.vivarium.cloud-5e22f57b.rsa.pub /etc/keys
           apk update && apk add alpine-sdk
           mv abuild.conf /etc
-          mkdir -p /var/cache/distfiles && \
-          chmod a+w /var/cache/distfiles && \
+          mkdir -p /var/cache/distfiles && 
+          chmod a+w /var/cache/distfiles && 
           adduser --disabled-password vivarium-devel
           addgroup vivarium-devel abuild
           su vivarium-devel
           mkdir /home/vivarium-devel/abuild
-          echo VIVARIUM_PRIV_KEY > /home/vivarium-devel/abuild/vivarium-devel@alpine.vivarium.cloud-5e22f57b.rsa
+          echo VIVARIUM_PRIV_KEY > /home/vivarium-devel/.abuild/vivarium-devel@alpine.vivarium.cloud-5e22f57b.rsa
           echo 'PACKAGER_PRIVKEY="/home/vivarium-devel/.abuild/vivarium-devel@alpine.vivarium.cloud-5e22f57b.rsa"' > /home/vivarium-devel/abuild/.abuild
       - name: Build Testing
         run: |
           cd testing
-          cd unittest++ && abuild -F checksum && abuild -rF && cd..
+          cd unittest++ && abuild checksum && abuild -r && cd..
