@@ -21,7 +21,8 @@ jobs:
           apk update && apk add alpine-sdk
           mv abuild.conf /etc
           mkdir -p /var/cache/distfiles && 
-          chmod a+w /var/cache/distfiles && 
+          chmod a+w /var/cache/distfiles &&
+          addgroup root abuild
           mkdir /github/home/.abuild
           echo VIVARIUM_PRIV_KEY > /github/home/.abuild/vivarium-devel@alpine.vivarium.cloud-5e22f57b.rsa
           echo 'PACKAGER_PRIVKEY="/github/home/.abuild/vivarium-devel@alpine.vivarium.cloud-5e22f57b.rsa"' > /github/home/.abuild/abuild.conf
