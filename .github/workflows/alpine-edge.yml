@@ -22,13 +22,10 @@ jobs:
           mv abuild.conf /etc
           mkdir -p /var/cache/distfiles && 
           chmod a+w /var/cache/distfiles && 
-          adduser --disabled-password vivarium-devel
-          addgroup vivarium-devel abuild
-          su vivarium-devel
-          mkdir /home/vivarium-devel/.abuild
-          echo VIVARIUM_PRIV_KEY > /home/vivarium-devel/.abuild/vivarium-devel@alpine.vivarium.cloud-5e22f57b.rsa
-          echo 'PACKAGER_PRIVKEY="/home/vivarium-devel/.abuild/vivarium-devel@alpine.vivarium.cloud-5e22f57b.rsa"' > /home/vivarium-devel/.abuild/abuild.conf
+          mkdir /github/home/.abuild
+          echo VIVARIUM_PRIV_KEY > /github/home/.abuild/vivarium-devel@alpine.vivarium.cloud-5e22f57b.rsa
+          echo 'PACKAGER_PRIVKEY="/github/home/.abuild/vivarium-devel@alpine.vivarium.cloud-5e22f57b.rsa"' > /github/home/.abuild/abuild.conf
       - name: Build Testing
         run: |
           cd testing
-          cd unittest++ && abuild checksum && abuild -r && cd..
+          cd unittest++ && abuild -F checksum && abuild -rF && cd..
