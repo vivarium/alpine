@@ -1,0 +1,63 @@
+# Contributor: Luca Cantoreggi
+# Maintainer: Luca Cantoreggi <luca@cantoreggi.xyz>
+_realpkgname="IP2Location-C-Library"
+pkgname="libip2location"
+pkgver="8.0.9"
+pkgrel=0
+pkgdesc="IP2Location library"
+
+url="https://www.ip2location.com/development-libraries/ip2location/c"
+arch="all"
+license="MIT"
+
+makedepends="autoconf automake libtool"
+
+subpackages="$pkgname-static $pkgname-dev"
+
+source="${pkgname}-${pkgver}.tar.gz::https://github.com/chrislim2888/$_realpkgname/archive/$pkgver.tar.gz"
+
+builddir="$srcdir/$_realpkgname-$pkgver"
+
+prepare() {
+
+	default_prepare
+
+	cd "$builddir"
+
+	aclocal && \
+	automake && \
+	autoconf && \
+	autoreconf -fi
+}
+
+build() {
+
+	cd "$builddir"
+
+	./configure \
+		--build=$CBUILD \
+		--host=$CHOST \
+		--prefix=/usr \
+		--exec-prefix=/usr \
+		--enable-static
+	
+	make clean
+	make
+	make -C data convert
+}
+
+check() {
+
+	cd "$builddir"
+
+	make check
+}
+
+package() {
+	
+	cd "$builddir"
+
+	make DESTDIR="$pkgdir/" install
+}
+
+sha512sums="b12052aab4bfa273ef3201c78f05ee1f96e7d08f57917d4062c18b7b1897b6419c52d9a123fc8db3187c1e0ae272a5f7c49117f657fea739a29c10439780acfd  libip2location-8.0.9.tar.gz"
