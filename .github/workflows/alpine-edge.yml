@@ -12,7 +12,6 @@ jobs:
       - uses: vivarium/abuild@master
         with:
           packager: Luca Cantoreggi <luca@cantoreggi.xyz>
-          version: edge
           keyName: vivarium-devel@alpine.vivarium.cloud-5e22f57b.rsa
           privKey: ${{ secrets.vivarium_priv_key }}
           pubKey: ${{ secrets.vivarium_pub_key }}
