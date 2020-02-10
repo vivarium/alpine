@@ -1,4 +1,4 @@
-name: Alpine v3.11
+name: Alpine v3.10
 
 on: [push]
 
@@ -9,10 +9,10 @@ jobs:
 
     steps:
       - uses: actions/checkout@v2
-      - uses: vivarium/abuild@v3.11
+      - uses: vivarium/abuild@v3.10
         with:
           packager: Luca Cantoreggi <luca@cantoreggi.xyz>
           keyName: vivarium-devel@alpine.vivarium.cloud-5e22f57b.rsa
           privKey: ${{ secrets.vivarium_priv_key }}
           pubKey: ${{ secrets.vivarium_pub_key }}
-          prefix: v3.11
+          prefix: v3.10
