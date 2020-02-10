@@ -1,4 +1,4 @@
-name: Alpine edge
+name: Alpine v3.11
 
 on: [push]
 
@@ -9,7 +9,7 @@ jobs:
 
     steps:
       - uses: actions/checkout@v2
-      - uses: vivarium/abuild@edge
+      - uses: vivarium/abuild@v3.11
         with:
           packager: Luca Cantoreggi <luca@cantoreggi.xyz>
           keyName: vivarium-devel@alpine.vivarium.cloud-5e22f57b.rsa
