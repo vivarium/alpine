@@ -1,0 +1,155 @@
+# Contributor: Luca Cantoreggi <luca@cantoreggi.xyz>
+# Maintainer: Luca Cantoreggi <luca@cantoreggi.xyz>
+
+_pkgrealname="ModSecurity"
+pkgname="modsecurity"
+pkgver="3.0.4"
+pkgrel=0
+pkgdesc="Cross platform web application firewall (WAF) engine"
+
+url="https://modsecurity.org/"
+arch="all"
+license="Apache-2.0"
+
+depends="libmodsecurity"
+
+makedepends="autoconf 
+			 automake 
+			 bison 
+			 curl-dev 
+			 doxygen 
+			 flex 
+			 geoip-dev 
+			 libmaxminddb-dev 
+			 libtool 
+			 libxml2-dev 
+			 linux-headers 
+			 lmdb-dev 
+			 lua-dev 
+			 pcre-dev 
+			 libfuzzy-dev 
+			 yajl-dev
+			"
+
+_libinjname="libinjection"
+_libinjver="3.10.0"
+
+_seclangname="secrules-language-tests"
+_seclangtree="c8cf2c588a93dce20781e597643e1b9d11aa4bba"
+
+_pkglib="lib$pkgname"
+
+subpackages="$_pkglib $_pkglib-static $_pkglib-dev" #TODO add docs
+
+source="${pkgname}-${pkgver}.tar.gz::https://github.com/SpiderLabs/$_pkgrealname/archive/v$pkgver.tar.gz
+		${_libinjname}-${_libinjver}.tar.gz::https://github.com/client9/$_libinjname/archive/v$_libinjver.tar.gz
+		${_seclangname}-${_seclangtree}.zip::https://github.com/SpiderLabs/$_seclangname/archive/$_seclangtree.zip
+       "
+
+builddir="$srcdir/$_pkgrealname-$pkgver"
+
+prepare() {
+
+	default_prepare
+
+	cd "$srcdir"
+
+	rm -r "$builddir/others/$_libinjname"
+	mv "$_libinjname-$_libinjver" "$builddir/others/$_libinjname"
+
+	rm -r "$builddir/test/test-cases/$_seclangname"
+	mv "$_seclangname-$_seclangtree" "$builddir/test/test-cases/$_seclangname"
+
+	cd "$builddir"
+
+	rm -rf autom4te.cache
+	rm -f aclocal.m4
+
+	autoreconf --install
+	autoheader
+	automake \
+		--add-missing \
+		--foreign \
+		--copy \
+		--force-missing
+	
+	autoconf --force
+
+	rm -rf autom4te.cache
+}
+
+build() {
+
+	cd "$builddir"
+	
+	./configure \
+		--build=$CBUILD \
+		--host=$CHOST \
+		--prefix=/usr \
+		--exec-prefix=/usr \
+		--with-lmdb \
+		--enable-parser-generation \
+		--enable-mutex-on-pm \
+		--enable-doxygen-dot \
+		--enable-doxygen-man \
+		--enable-doxygen-rtf \
+		--enable-doxygen-xml \
+		--enable-doxygen-ps  \
+		--enable-doxygen-pdf
+
+	make
+}
+
+check() {
+	
+	cd "$builddir"
+
+	make check
+}
+
+package() {
+	
+	cd "$builddir"
+
+	make DESTDIR="$pkgdir/" install
+}
+
+libmodsecurity() {
+
+	depends="geoip 
+			 libcurl 
+			 libfuzzy 
+			 libmaxminddb 
+			 libxml2 
+			 lmdb 
+			 lua-libs 
+			 pcre 
+			 yajl
+			"
+
+	mkdir -p "$subpkgdir"/usr/lib
+
+	mv "$pkgdir"/usr/lib/$_pkglib.la 	   "$subpkgdir"/usr/lib/$_pkglib.la
+	mv "$pkgdir"/usr/lib/$_pkglib.so.3 	   "$subpkgdir"/usr/lib/$_pkglib.so.3
+	mv "$pkgdir"/usr/lib/$_pkglib.so.$pkgver "$subpkgdir"/usr/lib/$_pkglib.so.$pkgver
+}
+
+libmodsecurity_dev() {
+
+	mkdir -p "$subpkgdir"-dev/usr/lib
+
+	mv "$pkgdir"/usr/include 		 "$subpkgdir"-dev/usr/include
+	mv "$pkgdir"/usr/lib/pkgconfig 	 "$subpkgdir"-dev/usr/lib/pkgconfig
+	mv "$pkgdir"/usr/lib/$_pkglib.so "$subpkgdir"-dev/usr/lib/$_pkglib.so
+}
+
+libmodsecurity_static() {
+
+	mkdir -p "$subpkgdir"-static/usr/lib
+
+	mv "$pkgdir"/usr/lib/$_pkglib.a "$subpkgdir"-static/usr/lib/$_pkglib.a
+}
+
+sha512sums="28310bb344890b8c97cae03954ac860ca3276c582b2dc22c8a1a7bcfe2835f22ea456745d19edc710d64cfd84bbd706abb1c5136b046ab92ab82524315506b7c  modsecurity-3.0.4.tar.gz
+15d144439d99dafd04703c7d6db329120bc24abb5d954d9006d1c5aba6acd79cde1e1af3faad6f263782c042d458c567ce12d4c4c6e44baf1d0a44c94d6564ee  libinjection-3.10.0.tar.gz
+2c9df2b1c9872cd2118970a7db9a3c22593ae67a8b363e37ad9e0c0128fbf565a47b647523bd32ba25fb7e84cdb47f76a60310b592ebc45f86b1303c3b97f948  secrules-language-tests-c8cf2c588a93dce20781e597643e1b9d11aa4bba.zip"

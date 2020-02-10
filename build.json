@@ -1,5 +1,6 @@
 [
     "testing/unittest++",
     "testing/ip2location",
-    "testing/ssdeep"
+    "testing/ssdeep",
+    "testing/modsecurity"
 ]
