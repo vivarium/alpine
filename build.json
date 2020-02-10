@@ -1,3 +1,4 @@
 [
-    "testing/unittest++"
+    "testing/unittest++",
+    "testing/ssdeep"
 ]

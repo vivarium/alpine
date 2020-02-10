@@ -1,0 +1,71 @@
+# Contributor: Luca Cantoreggi <luca@cantoreggi.xyz>
+# Maintainer: Luca Cantoreggi <luca@cantoreggi.xyz>
+pkgname="ssdeep"
+pkgver="2.14.1"
+pkgrel=0
+pkgdesc="Fuzzy hashing API and fuzzy hashing tool "
+
+url="https://ssdeep-project.github.io/ssdeep/index.html"
+arch="all"
+license="GPL-2.0"
+
+_pkglib="libfuzzy"
+
+subpackages="$pkgname-doc $_pkglib $_pkglib-static $_pkglib-dev"
+
+source="https://github.com/ssdeep-project/$pkgname/releases/download/release-$pkgver/$pkgname-$pkgver.tar.gz"
+
+builddir="$srcdir/$pkgname-$pkgver"
+
+build() {
+
+	cd "$builddir"
+
+	./configure	\
+		--build=$CBUILD \
+		--host=$CHOST \
+		--prefix=/usr \
+		--exec-prefix=/usr \
+
+	make
+}
+
+check() {
+
+	cd "$builddir"
+
+	make check
+}
+
+package() {
+
+	cd "$builddir"
+
+	make DESTDIR="$pkgdir/" install
+}
+
+libfuzzy() {
+
+ 	mkdir -p "$subpkgdir"/usr/lib
+
+	mv "$pkgdir"/usr/lib/libfuzzy.la 	   "$subpkgdir"/usr/lib/libfuzzy.la
+	mv "$pkgdir"/usr/lib/libfuzzy.so.2 	   "$subpkgdir"/usr/lib/libfuzzy.so.2
+	mv "$pkgdir"/usr/lib/libfuzzy.so.2.1.0 "$subpkgdir"/usr/lib/libfuzzy.so.2.1.0
+}
+
+libfuzzy_dev() {
+
+	mkdir -p "$subpkgdir"-dev/usr/lib
+
+	mv "$pkgdir"/usr/include 		 "$subpkgdir"-dev/usr/include
+	mv "$pkgdir"/usr/lib/libfuzzy.so "$subpkgdir"-dev/usr/lib/libfuzzy.so
+}
+
+libfuzzy_static() {
+	
+	mkdir -p "$subpkgdir"-static/usr/lib
+
+	mv "$pkgdir"/usr/lib/libfuzzy.a "$subpkgdir"-static/usr/lib/libfuzzy.a
+}
+
+sha512sums="a8f87e21f654d482a67709da273cf58808af377cfcb20f189986bad58530e382f8f1d3a5eaf33aa02284015a6fa7ccfc7fc383e487de6e0e4f57405a16537217  ssdeep-2.14.1.tar.gz"
