@@ -67,5 +67,3 @@ libfuzzy_static() {
 
 	mv "$pkgdir"/usr/lib/libfuzzy.a "$subpkgdir"-static/usr/lib/libfuzzy.a
 }
-
-sha512sums="a8f87e21f654d482a67709da273cf58808af377cfcb20f189986bad58530e382f8f1d3a5eaf33aa02284015a6fa7ccfc7fc383e487de6e0e4f57405a16537217  ssdeep-2.14.1.tar.gz"

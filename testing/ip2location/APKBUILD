@@ -59,5 +59,3 @@ package() {
 
 	make DESTDIR="$pkgdir/" install
 }
-
-sha512sums="b12052aab4bfa273ef3201c78f05ee1f96e7d08f57917d4062c18b7b1897b6419c52d9a123fc8db3187c1e0ae272a5f7c49117f657fea739a29c10439780acfd  libip2location-8.0.9.tar.gz"
