@@ -15,4 +15,4 @@ jobs:
           keyName: vivarium-devel@alpine.vivarium.cloud-5e22f57b.rsa
           privKey: ${{ secrets.vivarium_priv_key }}
           pubKey: ${{ secrets.vivarium_pub_key }}
-          alpine: 3.9
+          alpine: '3.9'
