@@ -11,7 +11,7 @@ license="GPL-2.0"
 
 _pkglib="libfuzzy"
 
-subpackages="$pkgname-doc $_pkglib $_pkglib-static $_pkglib-dev"
+subpackages="$pkgname-doc $_pkglib $_pkglib-static:"$_pkglib"_static $_pkglib-dev:"$_pkglib"_dev"
 
 source="https://github.com/ssdeep-project/$pkgname/releases/download/release-$pkgver/$pkgname-$pkgver.tar.gz"
 
@@ -55,15 +55,15 @@ libfuzzy() {
 
 libfuzzy_dev() {
 
-	mkdir -p "$subpkgdir"-dev/usr/lib
+	mkdir -p "$subpkgdir"/usr/lib
 
-	mv "$pkgdir"/usr/include 		 "$subpkgdir"-dev/usr/include
-	mv "$pkgdir"/usr/lib/libfuzzy.so "$subpkgdir"-dev/usr/lib/libfuzzy.so
+	mv "$pkgdir"/usr/include 		 "$subpkgdir"/usr/include
+	mv "$pkgdir"/usr/lib/libfuzzy.so "$subpkgdir"/usr/lib/libfuzzy.so
 }
 
 libfuzzy_static() {
 	
-	mkdir -p "$subpkgdir"-static/usr/lib
+	mkdir -p "$subpkgdir"/usr/lib
 
-	mv "$pkgdir"/usr/lib/libfuzzy.a "$subpkgdir"-static/usr/lib/libfuzzy.a
+	mv "$pkgdir"/usr/lib/libfuzzy.a "$subpkgdir"/usr/lib/libfuzzy.a
 }

@@ -39,7 +39,7 @@ _seclangtree="c8cf2c588a93dce20781e597643e1b9d11aa4bba"
 
 _pkglib="lib$pkgname"
 
-subpackages="$_pkglib $_pkglib-static $_pkglib-dev" #TODO add docs
+subpackages="$_pkglib $_pkglib-static:"$_pkglib"_static $_pkglib-dev:"$_pkglib"_dev" #TODO add docs
 
 source="${pkgname}-${pkgver}.tar.gz::https://github.com/SpiderLabs/$_pkgrealname/archive/v$pkgver.tar.gz
 		${_libinjname}-${_libinjver}.tar.gz::https://github.com/client9/$_libinjname/archive/v$_libinjver.tar.gz
@@ -83,8 +83,6 @@ build() {
 	cd "$builddir"
 	
 	./configure \
-		--build=$CBUILD \
-		--host=$CHOST \
 		--prefix=/usr \
 		--exec-prefix=/usr \
 		--with-lmdb \
@@ -129,23 +127,23 @@ libmodsecurity() {
 
 	mkdir -p "$subpkgdir"/usr/lib
 
-	mv "$pkgdir"/usr/lib/$_pkglib.la 	   "$subpkgdir"/usr/lib/$_pkglib.la
-	mv "$pkgdir"/usr/lib/$_pkglib.so.3 	   "$subpkgdir"/usr/lib/$_pkglib.so.3
+	mv "$pkgdir"/usr/lib/$_pkglib.so.3 	     "$subpkgdir"/usr/lib/$_pkglib.so.3
 	mv "$pkgdir"/usr/lib/$_pkglib.so.$pkgver "$subpkgdir"/usr/lib/$_pkglib.so.$pkgver
 }
 
 libmodsecurity_dev() {
 
-	mkdir -p "$subpkgdir"-dev/usr/lib
+	mkdir -p "$subpkgdir"/usr/lib
 
-	mv "$pkgdir"/usr/include 		 "$subpkgdir"-dev/usr/include
-	mv "$pkgdir"/usr/lib/pkgconfig 	 "$subpkgdir"-dev/usr/lib/pkgconfig
-	mv "$pkgdir"/usr/lib/$_pkglib.so "$subpkgdir"-dev/usr/lib/$_pkglib.so
+	mv "$pkgdir"/usr/include 		 "$subpkgdir"/usr/include
+	mv "$pkgdir"/usr/lib/pkgconfig 	 "$subpkgdir"/usr/lib/pkgconfig
+	mv "$pkgdir"/usr/lib/$_pkglib.la "$subpkgdir"/usr/lib/$_pkglib.la
+	mv "$pkgdir"/usr/lib/$_pkglib.so "$subpkgdir"/usr/lib/$_pkglib.so
 }
 
 libmodsecurity_static() {
 
-	mkdir -p "$subpkgdir"-static/usr/lib
+	mkdir -p "$subpkgdir"/usr/lib
 
-	mv "$pkgdir"/usr/lib/$_pkglib.a "$subpkgdir"-static/usr/lib/$_pkglib.a
+	mv "$pkgdir"/usr/lib/$_pkglib.a "$subpkgdir"/usr/lib/$_pkglib.a
 }

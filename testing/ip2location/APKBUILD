@@ -35,8 +35,6 @@ build() {
 	cd "$builddir"
 
 	./configure \
-		--build=$CBUILD \
-		--host=$CHOST \
 		--prefix=/usr \
 		--exec-prefix=/usr \
 		--enable-static
@@ -58,4 +56,11 @@ package() {
 	cd "$builddir"
 
 	make DESTDIR="$pkgdir/" install
+}
+
+static() {
+
+	mkdir -p "$subpkgdir"/usr/lib
+
+	mv "$pkgdir"/usr/lib/libIP2Location.a "$subpkgdir"/usr/lib/libIP2Location.a
 }

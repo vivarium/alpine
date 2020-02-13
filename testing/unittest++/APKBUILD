@@ -35,8 +35,6 @@ build() {
 	cd "$builddir"
 
 	./configure \
-		--build=$CBUILD \
-		--host=$CHOST \
 		--prefix=/usr \
 		--exec-prefix=/usr \
 
@@ -55,4 +53,11 @@ package() {
 	cd "$builddir"
 	
 	make DESTDIR="$pkgdir" install
+}
+
+static() {
+	
+	mkdir -p "$subpkgdir"/usr/lib
+
+	mv "$pkgdir"/usr/lib/libUnitTest++.a "$subpkgdir"/usr/lib/libUnitTest.a
 }
