@@ -1,0 +1,22 @@
+name: Alpine
+
+on: [push]
+
+jobs:
+  build:
+    name: Build all
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        alpine: ["3.8", "3.9", "3.10", "3.11", "edge"]
+
+    steps:
+      - uses: actions/checkout@v2
+      - uses: vivarium/abuild@master
+        with:
+          packager: Luca Cantoreggi <luca@cn7r66.com>
+          keyName: vivarium-devel@alpine.vivarium.cloud-5e22f57b.rsa
+          privKey: ${{ secrets.vivarium_priv_key }}
+          pubKey: ${{ secrets.vivarium_pub_key }}
+          alpine: ${{ matrix.alpine }}
