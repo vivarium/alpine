@@ -147,3 +147,8 @@ libmodsecurity_static() {
 
 	mv "$pkgdir"/usr/lib/$_pkglib.a "$subpkgdir"/usr/lib/$_pkglib.a
 }
+sha512sums="
+28310bb344890b8c97cae03954ac860ca3276c582b2dc22c8a1a7bcfe2835f22ea456745d19edc710d64cfd84bbd706abb1c5136b046ab92ab82524315506b7c  modsecurity-3.0.4.tar.gz
+15d144439d99dafd04703c7d6db329120bc24abb5d954d9006d1c5aba6acd79cde1e1af3faad6f263782c042d458c567ce12d4c4c6e44baf1d0a44c94d6564ee  libinjection-3.10.0.tar.gz
+2c9df2b1c9872cd2118970a7db9a3c22593ae67a8b363e37ad9e0c0128fbf565a47b647523bd32ba25fb7e84cdb47f76a60310b592ebc45f86b1303c3b97f948  secrules-language-tests-c8cf2c588a93dce20781e597643e1b9d11aa4bba.zip
+"
