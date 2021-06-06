@@ -13,7 +13,7 @@ jobs:
 
     steps:
       - uses: actions/checkout@v2
-      - uses: vivarium/abuild@master
+      - uses: vivarium/abuild@main
         with:
           packager: Luca Cantoreggi <luca@cn7r66.com>
           keyName: vivarium-devel@alpine.vivarium.cloud-5e22f57b.rsa
